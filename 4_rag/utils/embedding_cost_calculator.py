@@ -3,7 +3,7 @@ import os
 import tiktoken
 
 # Define the file path for the document
-file_path = os.path.join(os.path.dirname(__file__), "..", "odyssey.txt")
+file_path = os.path.join(os.path.dirname(__file__), "..", "books", "odyssey.txt")
 
 # Check if the file exists
 if not os.path.exists(file_path):
