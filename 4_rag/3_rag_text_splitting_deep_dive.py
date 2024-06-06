@@ -17,6 +17,7 @@ from langchain_openai import OpenAIEmbeddings
 # Define the directory containing the text file
 current_dir = os.path.dirname(os.path.abspath(__file__))
 file_path = os.path.join(current_dir, "books/odyssey.txt")
+db_dir = os.path.join(current_dir, "db")
 
 # Check if the text file exists
 if not os.path.exists(file_path):
@@ -36,7 +37,7 @@ embeddings = OpenAIEmbeddings(
 
 # Function to create and persist vector store
 def create_vector_store(docs, store_name):
-    persistent_directory = os.path.join(current_dir, "db", store_name)
+    persistent_directory = os.path.join(db_dir, store_name)
     if not os.path.exists(persistent_directory):
         print(f"\n--- Creating vector store {store_name} ---")
         db = Chroma.from_documents(
@@ -98,7 +99,7 @@ create_vector_store(custom_docs, "chroma_db_custom")
 
 # Function to query a vector store
 def query_vector_store(store_name, query):
-    persistent_directory = os.path.join(current_dir, "db", store_name)
+    persistent_directory = os.path.join(db_dir, store_name)
     if os.path.exists(persistent_directory):
         print(f"\n--- Querying the Vector Store {store_name} ---")
         db = Chroma(
