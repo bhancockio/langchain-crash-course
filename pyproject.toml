@@ -17,6 +17,8 @@ firestore = "^0.0.8"
 chromadb = "^0.5.0"
 tiktoken = "^0.7.0"
 sentence-transformers = "^3.0.0"
+bs4 = "^0.0.2"
+firecrawl-py = "^0.0.13"
 
 [tool.pyright]
 # https://github.com/microsoft/pyright/blob/main/docs/configuration.md

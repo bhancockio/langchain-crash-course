@@ -39,9 +39,7 @@ def create_vector_store(docs, embeddings, store_name):
     persistent_directory = os.path.join(db_dir, store_name)
     if not os.path.exists(persistent_directory):
         print(f"\n--- Creating vector store {store_name} ---")
-        db = Chroma.from_documents(
-            docs, embeddings, persist_directory=persistent_directory
-        )
+        Chroma.from_documents(docs, embeddings, persist_directory=persistent_directory)
         print(f"--- Finished creating vector store {store_name} ---")
     else:
         print(f"Vector store {store_name} already exists. No need to initialize.")
@@ -51,6 +49,7 @@ def create_vector_store(docs, embeddings, store_name):
 # Uses OpenAI's embedding models.
 # Useful for general-purpose embeddings with high accuracy.
 # Note: The cost of using OpenAI embeddings will depend on your OpenAI API usage and pricing plan.
+# Pricing: https://openai.com/api/pricing/
 print("\n--- Using OpenAI Embeddings ---")
 openai_embeddings = OpenAIEmbeddings(model="text-embedding-ada-002")
 create_vector_store(docs, openai_embeddings, "chroma_db_openai")
