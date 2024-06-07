@@ -5,7 +5,8 @@ from langchain_openai import OpenAIEmbeddings
 
 # Define the persistent directory
 current_dir = os.path.dirname(os.path.abspath(__file__))
-persistent_directory = os.path.join(current_dir, "db", "chroma_db_with_metadata")
+db_dir = os.path.join(current_dir, "db")
+persistent_directory = os.path.join(db_dir, "chroma_db_with_metadata")
 
 # Define the embedding model
 embeddings = OpenAIEmbeddings(model="text-embedding-ada-002")

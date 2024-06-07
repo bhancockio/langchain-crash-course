@@ -8,7 +8,8 @@ from langchain_openai import OpenAIEmbeddings
 # Define the directory containing the text files and the persistent directory
 current_dir = os.path.dirname(os.path.abspath(__file__))
 books_dir = os.path.join(current_dir, "books")
-persistent_directory = os.path.join(current_dir, "db", "chroma_db_with_metadata")
+db_dir = os.path.join(current_dir, "db")
+persistent_directory = os.path.join(db_dir, "chroma_db_with_metadata")
 
 print(f"Books directory: {books_dir}")
 print(f"Persistent directory: {persistent_directory}")
@@ -48,7 +49,7 @@ if not os.path.exists(persistent_directory):
     # Create embeddings
     print("\n--- Creating embeddings ---")
     embeddings = OpenAIEmbeddings(
-        model="text-embedding-ada-002"
+        model="text-embedding-3-small"
     )  # Update to a valid embedding model if needed
     print("\n--- Finished creating embeddings ---")
 
