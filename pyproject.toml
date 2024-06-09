@@ -19,6 +19,7 @@ tiktoken = "^0.7.0"
 sentence-transformers = "^3.0.0"
 bs4 = "^0.0.2"
 firecrawl-py = "^0.0.13"
+langchainhub = "^0.1.18"
 
 [tool.pyright]
 # https://github.com/microsoft/pyright/blob/main/docs/configuration.md
