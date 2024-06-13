@@ -105,7 +105,12 @@ Explore the technologies like documents, embeddings, and vector stores that enab
 
 - `1_agent_and_tools_basics.py`
 - `agent_deep_dive/`
+  - `1_agent_react_chat.py`
+  - `2_react_docstore.py`
 - `tools_deep_dive/`
+  - `1_tool_constructor.py`
+  - `2_tool_decorator.py`
+  - `3_tool_base_tool.py`
 
 Learn about agents, how they work, and how to build custom tools to enhance their capabilities.
 
