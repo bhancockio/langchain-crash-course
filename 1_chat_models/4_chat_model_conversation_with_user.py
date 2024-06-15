@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 from langchain.schema import AIMessage, HumanMessage, SystemMessage
 
 # Load environment variables from .env
@@ -23,7 +23,7 @@ while True:
     chat_history.append(HumanMessage(content=query))  # Add user message
 
     # Get AI response using history
-    result = model(chat_history)
+    result = model.invoke(chat_history)
     response = result.content
     chat_history.append(AIMessage(content=response))  # Add AI message
 

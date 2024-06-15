@@ -1,7 +1,6 @@
 # Example Source: https://python.langchain.com/v0.2/docs/integrations/memory/google_firestore/
 
 from dotenv import load_dotenv
-from google.auth import compute_engine
 from google.cloud import firestore
 from langchain_google_firestore import FirestoreChatMessageHistory
 from langchain_openai import ChatOpenAI
@@ -17,14 +16,15 @@ Steps to replicate this example:
     - Authenticate the Google Cloud CLI with your Google account
         - https://cloud.google.com/docs/authentication/provide-credentials-adc#local-dev
     - Set your default project to the new Firebase project you created
-5. 
+5. Enable the Firestore API in the Google Cloud Console:
+    - https://console.cloud.google.com/apis/enableflow?apiid=firestore.googleapis.com&project=crewai-automation
 """
 
 load_dotenv()
 
 # Setup Firebase Firestore
 PROJECT_ID = "langchain-demo-abf48"
-SESSION_ID = "user1_session"  # This could be a username or a unique ID
+SESSION_ID = "user_session_new"  # This could be a username or a unique ID
 COLLECTION_NAME = "chat_history"
 
 # Initialize Firestore Client
@@ -39,6 +39,7 @@ chat_history = FirestoreChatMessageHistory(
     client=client,
 )
 print("Chat History Initialized.")
+print("Current Chat History:", chat_history.messages)
 
 # Initialize Chat Model
 model = ChatOpenAI()

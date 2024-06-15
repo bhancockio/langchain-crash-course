@@ -1,8 +1,10 @@
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_anthropic import ChatAnthropic
+from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage, SystemMessage
 
 # Setup environment variables and messages
-
 load_dotenv()
 
 messages = [
@@ -12,7 +14,6 @@ messages = [
 
 
 # ---- LangChain OpenAI Chat Model Example ----
-from langchain_openai import ChatOpenAI
 
 # Create a ChatOpenAI model
 model = ChatOpenAI(model="gpt-4o")
@@ -23,7 +24,6 @@ print(f"Answer from OpenAI: {result.content}")
 
 
 # ---- Anthropic Chat Model Example ----
-from langchain_anthropic import ChatAnthropic
 
 # Create a Anthropic model
 # Anthropic models: https://docs.anthropic.com/en/docs/models-overview
@@ -36,8 +36,6 @@ print(f"Answer from Anthropic: {result.content}")
 # ---- Google Chat Model Example ----
 
 # https://console.cloud.google.com/gen-app-builder/engines
-from langchain_google_genai import ChatGoogleGenerativeAI
-
 # https://ai.google.dev/gemini-api/docs/models/gemini
 model = ChatGoogleGenerativeAI(model="gemini-1.5-flash")
 
