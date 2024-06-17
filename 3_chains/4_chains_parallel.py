@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 from langchain.prompts import ChatPromptTemplate
 from langchain.schema.output_parser import StrOutputParser
-from langchain.schema.runnable import RunnableBranch, RunnableLambda
+from langchain.schema.runnable import RunnableParallel, RunnableLambda
 from langchain_openai import ChatOpenAI
 
 # Load environment variables from .env
@@ -53,20 +53,21 @@ def combine_pros_cons(pros, cons):
 
 
 # Simplify branches with LCEL
-pros_branch = (
-    RunnableLambda(lambda x: analyze_pros(x["features"])) | model | StrOutputParser()
+pros_branch_chain = (
+    RunnableLambda(lambda x: analyze_pros(x)) | model | StrOutputParser()
 )
-cons_branch = (
-    RunnableLambda(lambda x: analyze_cons(x["features"])) | model | StrOutputParser()
+
+cons_branch_chain = (
+    RunnableLambda(lambda x: analyze_cons(x)) | model | StrOutputParser()
 )
 
 # Create the combined chain using LangChain Expression Language (LCEL)
 chain = (
     prompt_template
     | model
-    | RunnableLambda(lambda x: {"features": x})
-    | RunnableBranch(branches={"pros": pros_branch, "cons": cons_branch})
-    | RunnableLambda(lambda x: combine_pros_cons(x["pros"], x["cons"]))
+    | StrOutputParser()
+    | RunnableParallel(branches={"pros": pros_branch_chain, "cons": cons_branch_chain})
+    | RunnableLambda(lambda x: combine_pros_cons(x["branches"]["pros"], x["branches"]["cons"]))
 )
 
 # Run the chain
