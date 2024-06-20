@@ -1,8 +1,5 @@
 import os
 
-# Set environment variable to suppress tokenizer parallelism warning
-os.environ["TOKENIZERS_PARALLELISM"] = "false"
-
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
 from langchain_community.document_loaders import TextLoader
@@ -11,7 +8,7 @@ from langchain_openai import OpenAIEmbeddings
 
 # Define the directory containing the text file and the persistent directory
 current_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(current_dir, "books/odyssey.txt")
+file_path = os.path.join(current_dir, "books", "odyssey.txt")
 db_dir = os.path.join(current_dir, "db")
 
 # Check if the text file exists
@@ -39,10 +36,12 @@ def create_vector_store(docs, embeddings, store_name):
     persistent_directory = os.path.join(db_dir, store_name)
     if not os.path.exists(persistent_directory):
         print(f"\n--- Creating vector store {store_name} ---")
-        Chroma.from_documents(docs, embeddings, persist_directory=persistent_directory)
+        Chroma.from_documents(
+            docs, embeddings, persist_directory=persistent_directory)
         print(f"--- Finished creating vector store {store_name} ---")
     else:
-        print(f"Vector store {store_name} already exists. No need to initialize.")
+        print(
+            f"Vector store {store_name} already exists. No need to initialize.")
 
 
 # 1. OpenAI Embeddings
@@ -78,10 +77,8 @@ def query_vector_store(store_name, query, embedding_function):
             embedding_function=embedding_function,
         )
         retriever = db.as_retriever(
-            search_type="similarity",
-            search_kwargs={
-                "k": 3,
-            },
+            search_type="similarity_score_threshold",
+            search_kwargs={"k": 3, "score_threshold": 0.1},
         )
         relevant_docs = retriever.invoke(query)
         # Display the relevant results with metadata

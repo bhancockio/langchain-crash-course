@@ -1,7 +1,10 @@
 import os
 
+from dotenv import load_dotenv
 from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings
+
+load_dotenv()
 
 # Define the persistent directory
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -12,7 +15,8 @@ persistent_directory = os.path.join(db_dir, "chroma_db_with_metadata")
 embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
 
 # Load the existing vector store with the embedding function
-db = Chroma(persist_directory=persistent_directory, embedding_function=embeddings)
+db = Chroma(persist_directory=persistent_directory,
+            embedding_function=embeddings)
 
 
 # Function to query a vector store with different search types and parameters
@@ -41,7 +45,7 @@ def query_vector_store(
 
 
 # Define the user's question
-query = "Who is the main character in Moby Dick?"
+query = "How did Juliet die?"
 
 # Showcase different retrieval methods
 
@@ -50,7 +54,8 @@ query = "Who is the main character in Moby Dick?"
 # It finds the most similar documents to the query vector based on cosine similarity.
 # Use this when you want to retrieve the top k most similar documents.
 print("\n--- Using Similarity Search ---")
-query_vector_store("chroma_db_with_metadata", query, embeddings, "similarity", {"k": 3})
+query_vector_store("chroma_db_with_metadata", query,
+                   embeddings, "similarity", {"k": 3})
 
 # 2. Max Marginal Relevance (MMR)
 # This method balances between selecting documents that are relevant to the query and diverse among themselves.
@@ -79,7 +84,7 @@ query_vector_store(
     query,
     embeddings,
     "similarity_score_threshold",
-    {"k": 3, "score_threshold": 0.7},
+    {"k": 3, "score_threshold": 0.1},
 )
 
 print("Querying demonstrations with different search types completed.")

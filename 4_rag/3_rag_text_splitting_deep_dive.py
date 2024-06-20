@@ -1,8 +1,5 @@
 import os
 
-# Set environment variable to suppress tokenizer parallelism warning
-os.environ["TOKENIZERS_PARALLELISM"] = "false"
-
 from langchain.text_splitter import (
     CharacterTextSplitter,
     RecursiveCharacterTextSplitter,
@@ -16,7 +13,7 @@ from langchain_openai import OpenAIEmbeddings
 
 # Define the directory containing the text file
 current_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(current_dir, "books/odyssey.txt")
+file_path = os.path.join(current_dir, "books", "romeo_and_juliet.txt")
 db_dir = os.path.join(current_dir, "db")
 
 # Check if the text file exists
@@ -31,7 +28,7 @@ documents = loader.load()
 
 # Define the embedding model
 embeddings = OpenAIEmbeddings(
-    model="text-embedding-ada-002"
+    model="text-embedding-3-small"
 )  # Update to a valid embedding model if needed
 
 
@@ -45,7 +42,8 @@ def create_vector_store(docs, store_name):
         )
         print(f"--- Finished creating vector store {store_name} ---")
     else:
-        print(f"Vector store {store_name} already exists. No need to initialize.")
+        print(
+            f"Vector store {store_name} already exists. No need to initialize.")
 
 
 # 1. Character-based Splitting
@@ -76,7 +74,8 @@ create_vector_store(token_docs, "chroma_db_token")
 # Attempts to split text at natural boundaries (sentences, paragraphs) within character limit.
 # Balances between maintaining coherence and adhering to character limits.
 print("\n--- Using Recursive Character-based Splitting ---")
-rec_char_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
+rec_char_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=1000, chunk_overlap=100)
 rec_char_docs = rec_char_splitter.split_documents(documents)
 create_vector_store(rec_char_docs, "chroma_db_rec_char")
 
@@ -107,7 +106,7 @@ def query_vector_store(store_name, query):
         )
         retriever = db.as_retriever(
             search_type="similarity_score_threshold",
-            search_kwargs={"k": 1, "score_threshold": 0.75},
+            search_kwargs={"k": 1, "score_threshold": 0.1},
         )
         relevant_docs = retriever.invoke(query)
         # Display the relevant results with metadata
@@ -121,7 +120,7 @@ def query_vector_store(store_name, query):
 
 
 # Define the user's question
-query = "Who is Odysseus' wife?"
+query = "How did Juliet die?"
 
 # Query each vector store
 query_vector_store("chroma_db_char", query)
