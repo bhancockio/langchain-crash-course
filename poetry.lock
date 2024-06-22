@@ -4083,6 +4083,21 @@ files = [
 mpmath = ">=1.1.0,<1.4.0"
 
 [[package]]
+name = "tavily-python"
+version = "0.3.3"
+description = "Python wrapper for the Tavily API"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "tavily-python-0.3.3.tar.gz", hash = "sha256:14ac3d0cb5d2ce05487e7e8020460cd7b88d83c9916f46e344bcf25577acd346"},
+    {file = "tavily_python-0.3.3-py3-none-any.whl", hash = "sha256:032d598fe855d77c61e75ddd1faafd3b2c3aff37e88f43431a728610e26dcc4d"},
+]
+
+[package.dependencies]
+requests = "*"
+tiktoken = ">=0.5.2,<1"
+
+[[package]]
 name = "tbb"
 version = "2021.12.0"
 description = "Intel® oneAPI Threading Building Blocks (oneTBB)"
@@ -5104,4 +5119,4 @@ test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", 
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10.0,<3.12"
-content-hash = "696896d6d7e78011129050c3338d31b680eeddd52c589e15732e9975c0899c77"
+content-hash = "2a27a6f6f9e5c25fdae0a4db23fa24a6e163b85fa54402887b84baca379f3aad"

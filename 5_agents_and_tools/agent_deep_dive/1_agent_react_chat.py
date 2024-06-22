@@ -24,7 +24,8 @@ def search_wikipedia(query):
     from wikipedia import summary
 
     try:
-        return summary(query, sentences=2)  # Limit to two sentences for brevity
+        # Limit to two sentences for brevity
+        return summary(query, sentences=2)
     except:
         return "I couldn't find any information on that."
 
@@ -47,11 +48,12 @@ tools = [
 prompt = hub.pull("hwchase17/structured-chat-agent")
 
 # Initialize a ChatOpenAI model
-llm = ChatOpenAI()
+llm = ChatOpenAI(model="gpt-4o")
 
 # Create a structured Chat Agent with Conversation Buffer Memory
 # ConversationBufferMemory stores the conversation history, allowing the agent to maintain context across interactions
-memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
+memory = ConversationBufferMemory(
+    memory_key="chat_history", return_messages=True)
 
 # create_structured_chat_agent initializes a chat agent designed to interact using a structured prompt and tools
 # It combines the language model (llm), tools, and prompt to create an interactive agent
