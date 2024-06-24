@@ -51,7 +51,7 @@ Welcome to the LangChain Crash Course repository! This repo contains all the cod
 5. Run the code examples:
 
    ```bash
-    python chat_models/1_chat_model_basic.py
+    python 1_chat_models/1_chat_model_basic.py
    ```
 
 ## Repository Structure
