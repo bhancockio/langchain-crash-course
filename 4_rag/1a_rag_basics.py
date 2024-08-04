@@ -15,7 +15,7 @@ if not os.path.exists(persistent_directory):
     print("Persistent directory does not exist. Initializing vector store...")
 
     # Ensure the text file exists
-    if not os.path.exists(file_path):
+    if not os.path.exists(file_path, encoding='utf-8'):
         raise FileNotFoundError(
             f"The file {file_path} does not exist. Please check the path."
         )
