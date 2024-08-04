@@ -15,13 +15,13 @@ if not os.path.exists(persistent_directory):
     print("Persistent directory does not exist. Initializing vector store...")
 
     # Ensure the text file exists
-    if not os.path.exists(file_path, encoding='utf-8'):
+    if not os.path.exists(file_path):
         raise FileNotFoundError(
             f"The file {file_path} does not exist. Please check the path."
         )
 
     # Read the text content from the file
-    loader = TextLoader(file_path)
+    loader = TextLoader(file_path, encoding='utf-8')
     documents = loader.load()
 
     # Split the document into chunks
