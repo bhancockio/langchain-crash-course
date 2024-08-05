@@ -20,7 +20,7 @@ query = "Who is Odysseus' wife?"
 # Retrieve relevant documents based on the query
 retriever = db.as_retriever(
     search_type="similarity_score_threshold",
-    search_kwargs={"k": 3, "score_threshold": 0.9},
+    search_kwargs={"k": 3, "score_threshold": 0.4},
 )
 relevant_docs = retriever.invoke(query)
 
