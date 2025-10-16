@@ -22,10 +22,13 @@ firecrawl-py = "^0.0.13"
 langchainhub = "^0.1.18"
 wikipedia = "^1.4.0"
 tavily-python = "^0.3.3"
+torch = {version = "^2.7.1", source = "pytorch"}
+torchvision = {version = "^0.22.1", source = "pytorch"}
+torchaudio = {version = "^2.7.1", source = "pytorch"}
 
 [[tool.poetry.source]]
 name = "pytorch"
-url = "https://download.pytorch.org/whl/cpu"
+url = "https://download.pytorch.org/whl/cu118"
 priority = "explicit"
 
 [tool.pyright]

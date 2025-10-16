@@ -2,15 +2,27 @@ import os
 
 from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings
-
+from langchain_community.embeddings import SentenceTransformerEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
+import torch
 # Define the persistent directory
 current_dir = os.path.dirname(os.path.abspath(__file__))
 db_dir = os.path.join(current_dir, "db")
 persistent_directory = os.path.join(db_dir, "chroma_db_with_metadata")
 
 # Define the embedding model
-embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
-
+print("\n--- Checking GPU availability ---")
+if torch.cuda.is_available():
+    print(f"GPU available: {torch.cuda.get_device_name(0)}")
+    print(f"GPU memory: {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f} GB")
+    device = "cuda"
+else:
+    print("GPU not available, using CPU")
+    device = "cpu"
+embeddings = HuggingFaceEmbeddings(
+        model_name="sentence-transformers/all-MiniLM-L6-v2",
+        model_kwargs={"device": device},
+    )
 # Load the existing vector store with the embedding function
 db = Chroma(persist_directory=persistent_directory,
             embedding_function=embeddings)

@@ -1,29 +1,23 @@
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_anthropic import ChatAnthropic
 from langchain_openai import ChatOpenAI
-from dotenv import load_dotenv
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 
-# Setup environment variables and messages
-load_dotenv()
-
+# Setup messages
 messages = [
     SystemMessage(content="Solve the following math problems"),
     HumanMessage(content="What is 81 divided by 9?"),
 ]
 
+# ---- Local LLM Example using LM Studio with ChatOpenAI ----
 
+# The base_url points to the LM Studio server.
+# The 'model' parameter can be set to any string, as LM Studio ignores it.
+model = ChatOpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio") # type: ignore
 
-# ---- Google Chat Model Example ----
-
-# https://console.cloud.google.com/gen-app-builder/engines
-# https://ai.google.dev/gemini-api/docs/models/gemini
-model = ChatGoogleGenerativeAI(model="gemini-1.5-flash") # type: ignore
-
-# AIMessage:
-#   Message from an AI.
+# Invoke the model with the initial set of messages
 result = model.invoke(messages)
-print(f"Answer from Google: {result.content}")
+print(f"Answer from Local LLM: {result.content}")
+
+# Add the AI's response to the message history for a new query
 messages = [
     SystemMessage(content="Solve the following math problems"),
     HumanMessage(content="What is 81 divided by 9?"),
@@ -31,6 +25,6 @@ messages = [
     HumanMessage(content="What is 10 times 5?"),
 ]
 
-# Invoke the model with messages
+# Invoke the model again with the updated message history
 result = model.invoke(messages)
-print(f"Answer from AI: {result.content}")
+print(f"Answer from Local LLM: {result.content}")
